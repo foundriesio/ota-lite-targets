@@ -1,11 +1,11 @@
 FROM alpine:latest
-ENV AKTUALIZR_SRCREV 896ca2a38aa497c47599b2e3b16b518ae0e8eccf
+ENV AKTUALIZR_SRCREV 2020.10+fio
 WORKDIR /root/
 
 RUN apk add --no-cache cmake git g++ make curl-dev libarchive-dev libsodium-dev dpkg-dev doxygen graphviz sqlite-dev glib-dev autoconf automake libtool python3 \
-	&& wget https://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz \
-	&& tar -xzf boost_1_57_0.tar.gz \
-	&& cd boost_1_57_0 \
+	&& wget https://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz \
+	&& tar -xzf boost_1_58_0.tar.gz \
+	&& cd boost_1_58_0 \
 	&& ./bootstrap.sh --with-libraries="log,filesystem,program_options,system" \
 	&& ./b2 -j`getconf _NPROCESSORS_ONLN` install \
 	&& cd ../ \
@@ -15,7 +15,7 @@ RUN apk add --no-cache cmake git g++ make curl-dev libarchive-dev libsodium-dev 
 	&& ./configure \
 	&& make -j`getconf _NPROCESSORS_ONLN` install \
 	&& cd ../ \
-	&& git clone https://github.com/advancedtelematic/aktualizr.git \
+	&& git clone https://github.com/foundriesio/aktualizr.git \
 	&& cd aktualizr \
 	&& git checkout $AKTUALIZR_SRCREV \
 	&& git submodule update --init --recursive \
